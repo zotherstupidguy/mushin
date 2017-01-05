@@ -36,14 +36,14 @@ module Mushin
 		#NOTE CQRS 
 		@@dsl_tree.each do |klass_context_set|
 		  klass_context_set.each do |klass_context_key, klass_context_value|
-		    self.singleton_class.send :define_method, klass_context_key do |&context_block|
+		    self.singleton_class.__send__ :define_method, klass_context_key do |&context_block|
 		      klass_context_value.each do |klass_construct_set|
 			$log.debug "the whole construct_set: #{klass_construct_set}"
 			klass_construct_set.each do |klass_construct_key, klass_construct_value|
 			  $log.debug "klass_construct_key #{klass_construct_key} | klass_construct_value #{klass_construct_value}"
 			  $log.debug "#{@@dsl_tree}"
 			  #NOTE creates an instance method with the name of the klass_construct_key
-			  self.singleton_class.send :define_method, klass_construct_key do |instance_hash = Hash.new|
+			  self.singleton_class.__send__ :define_method, klass_construct_key do |instance_hash = Hash.new|
 			    @stack 		= Mushin::Stack.new
 			    klass_construct_value.each do |klass_ext|
 			      ext_hash 		= Hash.new

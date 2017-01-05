@@ -19,7 +19,7 @@ module Mushin
 	# creates a context klass dynamically
 	DSL.const_set(context_name.capitalize, app_context_klass) unless DSL.const_defined?(context_name.capitalize)
 	# creates an access method inside DSL for the dynamically created context klass
-	DSL.send(:define_method, context_name) do |&block|
+	DSL.__send__(:define_method, context_name) do |&block|
 	  DSL.const_get(context_name.capitalize).new &block unless context_name.nil?
 	end
 
