@@ -53,20 +53,22 @@ module Mushin
 			      klass_opts_hash 	= klass_ext[:opts]
 			      klass_params_hash = klass_ext[:params]
 
-			      #NOTE provides an ext_hash via binding of instance_hash values to klass_hashs(opts & params) keys 
-			      instance_hash.each do |instance_hash_key, instance_hash_value|
-				ext_hash[:opts][klass_opts_hash.invert[instance_hash_key]] 	= instance_hash_value unless klass_opts_hash.nil? || klass_opts_hash.invert[instance_hash_key].nil? 
-				ext_hash[:params][klass_params_hash.invert[instance_hash_key]] 	= instance_hash_value unless klass_params_hash.nil? || klass_params_hash.invert[instance_hash_key].nil? 
-			      end
-			      #NOTE adds the extras from klass_hashs via reverse merge
-			      ext_hash[:opts] 	= klass_opts_hash.merge(ext_hash[:opts]) unless klass_opts_hash.nil?
-			      ext_hash[:params] = klass_params_hash.merge(ext_hash[:params]) unless klass_params_hash.nil?
-
 			      if klass_context_key == "query" then
 				ext_hash[:opts][:cqrs_query] = true
 			      else
 				ext_hash[:opts][:cqrs_query] = false
 			      end
+
+			      #NOTE provides an ext_hash via binding of instance_hash values to klass_hashs(opts & params) keys 
+			      instance_hash.each do |instance_hash_key, instance_hash_value|
+				ext_hash[:opts][klass_opts_hash.invert[instance_hash_key]] 	= instance_hash_value unless klass_opts_hash.nil? || klass_opts_hash.invert[instance_hash_key].nil? 
+				ext_hash[:params][klass_params_hash.invert[instance_hash_key]] 	= instance_hash_value unless klass_params_hash.nil? || klass_params_hash.invert[instance_hash_key].nil? 
+			      end
+
+			      #NOTE adds the extras from klass_hashs via reverse merge
+			      ext_hash[:opts] 	= klass_opts_hash.merge(ext_hash[:opts]) unless klass_opts_hash.nil?
+			      ext_hash[:params] = klass_params_hash.merge(ext_hash[:params]) unless klass_params_hash.nil?
+
 
 			      $log.debug "insert_before 0 into stack: #{ext_hash[:ext]}, #{ext_hash[:opts]}, #{ext_hash[:params]}"
 			      @stack.insert_before 0,  ext_hash[:ext], ext_hash[:opts], ext_hash[:params]
