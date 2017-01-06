@@ -61,13 +61,24 @@ module Mushin
 			      #NOTE adds the extras from klass_hashs via reverse merge
 			      ext_hash[:opts] 	= klass_opts_hash.merge(ext_hash[:opts]) unless klass_opts_hash.nil?
 			      ext_hash[:params] = klass_params_hash.merge(ext_hash[:params]) unless klass_params_hash.nil?
+
+			      if klass_context_key == "query" then
+				ext_hash[:opts][:cqrs_query] = true
+			      else
+				ext_hash[:opts][:cqrs_query] = false
+			      end
+
 			      $log.debug "insert_before 0 into stack: #{ext_hash[:ext]}, #{ext_hash[:opts]}, #{ext_hash[:params]}"
 			      @stack.insert_before 0,  ext_hash[:ext], ext_hash[:opts], ext_hash[:params]
 			    end
 			    if klass_context_key == "query" then
 			      #NOTE CQRS Query
+			      
+			      #TODO Should automatically insert {:cqrs => cqrs_query} into the opts. 
+			      #TODO That way DSFs don't need to worry about specifiyin cqrs but only about using the query keyword when requiring a query
 			      $log.debug "klass_construct_key #{klass_construct_key} | klass_construct_value #{klass_construct_value}"
-			      @stack.insert_before 0, Mushin::Store, {}, {}
+			      #TODO no need to use a Mushin::Store at all
+			      #@stack.insert_before 0, Mushin::Store, {}, {}
 			      stack_data = @stack.call
 			      store(data_key: klass_construct_key.to_sym, data_value: stack_data)
 			    else
