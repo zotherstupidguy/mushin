@@ -54,9 +54,9 @@ module Mushin
 			      klass_params_hash = klass_ext[:params]
 
 			      if klass_context_key == "query" then
-				ext_hash[:opts][:cqrs_query] = true
+				ext_hash[:opts][:cqrs] = :cqrs_query
 			      else
-				ext_hash[:opts][:cqrs_query] = false
+				ext_hash[:opts][:cqrs] = :cqrs_command
 			      end
 
 			      #NOTE provides an ext_hash via binding of instance_hash values to klass_hashs(opts & params) keys 

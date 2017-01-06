@@ -58,17 +58,17 @@ module Mushin
 	def call env 
 	  env ||= Hash.new 
 
-	  case @opts[:cqrs]
-	  when :cqrs_query 
+	  case @opts[:cqrs_query]
+	  when true 
 	    #inbound code
 	    @app.call(env)
 	    #outbound code
-	  when :cqrs_command
+	  when false
 	    #inbound code
 	    @app.call(env)
 	    #outbound code
 	  else
-	    raise "#{name} requires you to specify if your cqrs call is command or query?"
+	    raise "#{name} requires you to specify if your cqrs call is command or query? example: opts[:cqrs_query] = true"
 	  end
 
 	end
@@ -82,6 +82,9 @@ before do
  @env = {}
 end
   it "ext" do
+	#NOTE must specifiy the opts_query true or false while testing the extensions, but if the extenstion is called via a DSF, DSF automatically carry it out
+	opts[:cqrs_query] = false
+
     opts        = {:cqrs => :cqrs_command}
     params      = {:username => @secrets["github"]["login"], :password => @secrets["github"]["password"]}
     @ext        = Github::Ext.new(Proc.new {}, opts, params)
