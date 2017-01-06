@@ -77,8 +77,8 @@ module Mushin
 			      #TODO Should automatically insert {:cqrs => cqrs_query} into the opts. 
 			      #TODO That way DSFs don't need to worry about specifiyin cqrs but only about using the query keyword when requiring a query
 			      $log.debug "klass_construct_key #{klass_construct_key} | klass_construct_value #{klass_construct_value}"
-			      #TODO no need to use a Mushin::Store at all
-			      #@stack.insert_before 0, Mushin::Store, {}, {}
+			      #NOTE add store middleware for query
+			      @stack.insert_before 0, Mushin::Store, {}, {}
 			      stack_data = @stack.call
 			      store(data_key: klass_construct_key.to_sym, data_value: stack_data)
 			    else
