@@ -111,10 +111,10 @@ end
 	match = @gemspec 
       end
 
-      puts "amending gemspec with gem name #{"mushin_ext_" + name.downcase}" 
-      gsub_file gemspec_file, /"#{name}"/ do |match|
-	match = "'#{"mushin_ext_" + name.downcase}'"
-      end
+      #puts "amending gemspec with gem name #{"mushin_ext_" + name.downcase}" 
+      #gsub_file gemspec_file, /"#{name}"/ do |match|
+      #	match = "'#{"mushin_ext_" + name.downcase}'"
+      #end
 
       puts "amending gemspec with gem summary" 
       gsub_file gemspec_file, /%q{TODO: Write a short summary, because Rubygems requires one.}/  do |match|
@@ -137,8 +137,8 @@ end
       end
 
       #NOTE renaming lib/name.rb file to be able to require the gem with the same name 
-      puts "renaming lib/#{name}.rb to lib/mushin_ext_#{name.downcase}.rb " 
-      system("mv ./#{name}/lib/#{name}.rb ./#{name}/lib/mushin_ext_#{name.downcase}.rb")
+      #puts "renaming lib/#{name}.rb to lib/mushin_ext_#{name.downcase}.rb " 
+      #system("mv ./#{name}/lib/#{name}.rb ./#{name}/lib/mushin_ext_#{name.downcase}.rb")
 
       readme_file =  "#{name.to_s}/README.md"
       gsub_file readme_file, /#{name}/ do |match|
@@ -230,18 +230,18 @@ end
 	match = "'#{license}'"
       end
 
-      puts "amending README.md" 
-      readme_file =  "#{name.to_s}/README.md"
-      gsub_file readme_file, /#{name}/ do |match|
-	match = "#{"mushin_dsf_" + name.downcase}"
-      end
+      #puts "amending README.md" 
+      #readme_file =  "#{name.to_s}/README.md"
+      #gsub_file readme_file, /#{name}/ do |match|
+      #	match = "#{"mushin_dsf_" + name.downcase}"
+      #end
 
       #remove_file "./#{name}/lib/#{name}.rb"
       #create_file "./#{name}/lib/#{name}.rb"
 
       #NOTE renaming lib/name.rb file to be able to require the gem with the same name 
-      puts "renaming lib/#{name}.rb to lib/mushin_dsf_#{name.downcase}.rb " 
-      system("mv ./#{name}/lib/#{name}.rb ./#{name}/lib/mushin_dsf_#{name.downcase}.rb")
+      #puts "renaming lib/#{name}.rb to lib/mushin_dsf_#{name.downcase}.rb " 
+      #system("mv ./#{name}/lib/#{name}.rb ./#{name}/lib/mushin_dsf_#{name.downcase}.rb")
 
       #NOTE creates an empty /ext dir in the generated DSF for experimental extensions before extracting them into gems
       puts "creating an empty /ext dir for experimental extenstions"
