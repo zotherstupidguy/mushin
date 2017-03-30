@@ -29,7 +29,10 @@ module Mushin
       if license.nil? then license = "MIT" end
 
       homepage = check(homepage)
-
+     
+      #TODO added this to make sense of what is an ext and what is a dsf!!
+      name = "mushin_ext_" + name
+      
       system("bundle gem #{name}")
 
       file =  "#{name.to_s}/lib/#{name}.rb"
@@ -153,7 +156,7 @@ end
       if license.nil? then license = "MIT" end
 
       homepage = check(homepage)
-
+      name = "mushin_dsf_" + name
       system("bundle gem #{name}")
 
 
